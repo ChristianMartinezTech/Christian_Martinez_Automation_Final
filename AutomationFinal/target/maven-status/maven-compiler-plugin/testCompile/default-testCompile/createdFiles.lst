@@ -1,0 +1,4 @@
+com\globant\pages\web\HomePage.class
+com\globant\runners\web\SignUp.class
+com\globant\stepdefinitions\web\SignUpStepDefinitions.class
+com\globant\pages\mobile\BaseScreen.class

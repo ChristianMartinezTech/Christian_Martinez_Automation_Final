@@ -1,0 +1,5 @@
+com\globant\configuration\mobile\BaseMobile.class
+com\globant\configuration\mobile\ConfigCapabilities.class
+com\globant\configuration\web\Driver.class
+com\globant\reporting\Reporter.class
+com\globant\configuration\web\WebOperations.class
