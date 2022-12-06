@@ -1,42 +1,45 @@
-package com.globant.tests.web;
+package com.globant.stepdefinitions.web;
 
 import com.globant.configuration.web.Driver;
 import com.globant.pages.web.HomePage;
 import com.globant.reporting.Reporter;
-import org.testng.annotations.*;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import static java.lang.String.format;
 
 /***
  * BaseTest Class
  * This class is used to store the methods that will be used before and after the test
  */
-public class BaseTest {
+public class Hook {
     private Driver driver;
     protected HomePage home;
 
     /***
      * SetUp methods executes multiple operations before the creation of the new session
-     * @param browser browser name (either Chrome or Firefox)
-     * @param url Homepage URL
      */
-    @Parameters({"browser", "url"})
-    @BeforeTest
-    public void setUp(String browser, String url){
-        driver = new Driver(browser);
+    @Before
+    public void setUp(){
+        WebReference WebReference = new WebReference();
+
+        driver = new Driver();
+        WebReference.setDriver(driver);
+
         Reporter.info("Deleting cookies");
         driver.getDriver().manage().deleteAllCookies();
 
-        Reporter.info(format("Navigating to %s", url));
-        driver.getDriver().get(url);
+        Reporter.info(format("Navigating to %s", "https://www.espnqa.com/?src=com&_adblock=true&espn=cloud"));
+        driver.getDriver().get("https://www.espnqa.com/?src=com&_adblock=true&espn=cloud");
         driver.getDriver().manage().window().maximize();
 
         home = new HomePage(driver.getDriver());
+        WebReference.setHome(home);
     }
 
     /***
      * Ends the session
      */
-    @AfterTest
+    @After
     public void endSession(){
         driver.getDriver().quit();
     }

@@ -1,4 +1,10 @@
+com\globant\tests\web\LogOutTest.class
+com\globant\pages\web\BasePage.class
+com\globant\tests\web\BaseTest.class
 com\globant\pages\web\HomePage.class
 com\globant\runners\web\SignUp.class
+com\globant\util\Listener.class
+com\globant\tests\web\LoginTest.class
+com\globant\tests\web\DeactivateAccountTest.class
 com\globant\stepdefinitions\web\SignUpStepDefinitions.class
 com\globant\pages\mobile\BaseScreen.class

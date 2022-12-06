@@ -17,20 +17,10 @@ public class Driver {
 
     /***
      * Driver Constructor.
-     * @param browser Either Chrome or Firefox.
      */
-    public Driver(String browser){
-        if (browser.equalsIgnoreCase("chrome")){
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        }
-        else if (browser.equalsIgnoreCase("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
-        }
-        else {
-            Reporter.error(format("Not available driver for browser %s", browser));
-        }
+    public Driver() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
     }
 
     /***

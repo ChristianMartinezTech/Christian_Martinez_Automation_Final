@@ -87,6 +87,10 @@ public class HomePage extends BasePage {
 
     // Methods
 
+    public HomePage getHomePage(){
+        return HomePage.this;
+    }
+
     /***
      * Method that hover over the user icon to enable Login, Logout, Account Settings, etc.
      */
