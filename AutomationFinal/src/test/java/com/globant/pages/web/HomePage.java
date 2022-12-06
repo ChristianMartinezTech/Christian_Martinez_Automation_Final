@@ -39,12 +39,6 @@ public class HomePage extends BasePage {
     @FindBy (id = "oneid-iframe")
     private WebElement loginIframe;
 
-    @FindBy (id = "InputLoginValue")
-    private WebElement LogInEmail;
-
-    @FindBy (id = "InputPassword")
-    private WebElement LogInPassword;
-
     @FindBy (id = "BtnSubmit")
     private WebElement LogInButton;
 
@@ -84,13 +78,29 @@ public class HomePage extends BasePage {
     @FindBy (css = "#Title > span")
     private WebElement accountDeactivated;
 
+    @FindBy (id = "BtnCreateAccount")
+    private WebElement signUpButton;
+
+    @FindBy (id = "InputFirstName")
+    private WebElement firstNameField;
+
+    @FindBy (id = "InputLastName")
+    private WebElement lastNameField;
+
+    @FindBy (id = "InputEmail")
+    private WebElement emailField;
+
+    @FindBy (id = "password-new")
+    private WebElement passwordField;
+
+    @FindBy (id = "BtnSubmit")
+    private WebElement submitSignUpButton;
+
+    @FindBy (id = "close")
+    private WebElement signUpCloseButton;
+
 
     // Methods
-
-    public HomePage getHomePage(){
-        return HomePage.this;
-    }
-
     /***
      * Method that hover over the user icon to enable Login, Logout, Account Settings, etc.
      */
@@ -107,26 +117,82 @@ public class HomePage extends BasePage {
     }
 
     /***
-     * Clicks to input an email
+     * LogIn iFrame
      */
-    public void clickEmailLogIn() {
-        super.clickElement(LogInEmail);
+    public void goToLogInIframe() {
+        super.getDriver().switchTo().frame(loginIframe);
+    }
+
+    // New Methods
+    /***
+     * Clicks the Sign-Up button
+     */
+    public void clickSignUp() {
+        super.waitForVisibility(signUpButton);
+        super.clickElement(signUpButton);
     }
 
     /***
-     * clicks to input a password
+     * Inputs the first name
+     * @param firstName first name
      */
-    public void clickPasswordLogIn() {
-        super.clickElement(LogInPassword);
+    public void inputFirstName(String firstName) {
+        super.waitForVisibility(firstNameField);
+        super.typeOnInput(firstNameField, firstName);
+    }
+
+    /***
+     * Checks if first name exists
+     * @return true if element exists
+     */
+    public boolean firstNameExists() {
+        try {
+            return firstNameField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /***
+     * Inputs Last Name
+     * @param lastName last name
+     */
+    public void inputLastName(String lastName) {
+        super.waitForVisibility(lastNameField);
+        super.typeOnInput(lastNameField, lastName);
+    }
+
+    /***
+     * Checks if last name exists
+     * @return true if element exists
+     */
+    public boolean lastNameExists() {
+        try {
+            return lastNameField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     /***
      * Inputs the email
-     * @param email to type
+     * @param email email
      */
     public void inputEmail(String email) {
-        super.waitForVisibility(LogInEmail);
-        super.typeOnInput(LogInEmail, email);
+        super.waitForVisibility(emailField);
+        super.typeOnInput(emailField, email);
+    }
+
+    /***
+     * Check that the email field exists
+     * @return true if exists
+     */
+    public boolean emailExists() {
+        try {
+            return emailField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     /***
@@ -134,38 +200,52 @@ public class HomePage extends BasePage {
      * @param password to type
      */
     public void inputPassword(String password) {
-        super.waitForVisibility(LogInPassword);
-        super.typeOnInput(LogInPassword, password);
+        super.waitForVisibility(passwordField);
+        super.typeOnInput(passwordField, password);
     }
 
     /***
-     * LogIn iFrame
+     * Checks the password field exists
+     * @return true if exists
      */
-    public void goToLogInIframe() {
-        super.getDriver().switchTo().frame(loginIframe);
+    public boolean passwordExists() {
+        try {
+            return passwordField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     /***
-     * Button lo log in
+     * Clicks the submit button
      */
-    public void logInButton() {
-        super.waitForVisibility(LogInButton);
-        super.clickElement(LogInButton);
+    public void clickSubmitSignUpButton() {
+        super.waitForVisibility(submitSignUpButton);
+        super.clickElement(submitSignUpButton);
     }
 
     /***
-     * Button to log out
+     * Checks the Sign-Up button exists
+     * @return true if button exists
      */
-    public void clickLogOutButton() {
-        super.clickElement(LogOutButton);
+    public boolean submitSubmitExists() {
+        try {
+            return submitSignUpButton.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     /***
-     * Click on the ESPN profile button
+     * Checks if the cloe button exists
+     * @return true if exists
      */
-    public void clickEspnProfile(){
-        super.waitForVisibility(espnProfile);
-        super.clickElement(espnProfile);
+    public boolean checkSignUpCloseButton(){
+        try {
+            return signUpCloseButton.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     /***
@@ -194,50 +274,9 @@ public class HomePage extends BasePage {
 
     /***
      * Goes to HomePage
-     * @param url url of the HomePage given in suite.xml
      */
-    public void goHomepage(String url){
-        getDriver().get(url);
-    }
-
-    /***
-     * Clicks on Delete Account
-     */
-    public void clickDeleteAccount(){
-        super.waitForVisibility(deleteAccountButton);
-        ((JavascriptExecutor) super.getDriver()).executeScript("arguments[0].click();", deleteAccountButton);
-    }
-
-    /***
-     * Clicks on Submit Delete Account
-     */
-    public void clickDeleteAccountSubmit(){
-        super.waitForVisibility(deleteAccountSubmit);
-        super.clickElement(deleteAccountSubmit);
-    }
-
-    /***
-     * Moves to the Delete button
-     */
-    public void moveToDelete(){
-        super.waitForVisibility(deleteAccountButton);
-        super.hoverOver(deleteAccountButton);
-    }
-
-    /***
-     * Interface of login methods
-     * @param email email for log in given in the suite.xml file
-     * @param password email for log in given in the suite.xml file
-     */
-    public void loginMethods(String email, String password){
-        hoverOverUsrIcon();
-        clickContainerLogIn();
-        goToLogInIframe();
-        clickEmailLogIn();
-        inputEmail(email);
-        clickPasswordLogIn();
-        inputPassword(password);
-        logInButton();
+    public void goHomepage(){
+        getDriver().get("https://www.espnqa.com/?src=com&_adblock=true&espn=cloud");
     }
 
     /***
@@ -267,6 +306,9 @@ public class HomePage extends BasePage {
         String nameFixed = accountName.getText();
         StringBuffer sb = new StringBuffer(nameFixed);
         sb.deleteCharAt(sb.length()-1);
+
+        System.out.println(sb);
+        System.out.println(name);
 
         return nameEqual(String.valueOf(sb), name);
     }

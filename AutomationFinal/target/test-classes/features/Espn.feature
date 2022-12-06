@@ -8,7 +8,6 @@ Background:
   Scenario: Sign Up successful
     When click Sign Up button
     Then Sign Up with "Chris" "Martinez" "Aloha..1@gmail.com" and "Aloha..1"
-    And user is logged in
 
   # Check Carousel
   Scenario: Carousel present
