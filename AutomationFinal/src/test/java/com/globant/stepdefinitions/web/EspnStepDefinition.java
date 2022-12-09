@@ -2,6 +2,8 @@ package com.globant.stepdefinitions.web;
 
 import com.globant.configuration.web.Driver;
 import com.globant.pages.web.HomePage;
+import com.globant.pages.web.WatchPage;
+import com.globant.reporting.Reporter;
 import io.cucumber.java.en.*;
 import org.testng.Assert;
 
@@ -9,8 +11,9 @@ public class EspnStepDefinition {
 
     @Given("ESPN website is loaded")
     public void espn_is_loaded() {
-        Driver driver = WebReference.getDriver();
-        HomePage home = WebReference.getHome();
+        Reporter.info("");
+        Driver driver = WebDriverReference.getDriver();
+        HomePage home = WebDriverReference.getHome();
 
         // Checking the drivers have been properly initialized
         Assert.assertNotNull(driver);
@@ -19,7 +22,7 @@ public class EspnStepDefinition {
 
     @When("click Sign Up button")
     public void click_sign_up_button() {
-        HomePage home = WebReference.getHome();
+        HomePage home = WebDriverReference.getHome();
         Assert.assertNotNull(home);
 
         home.hoverOverUsrIcon();
@@ -33,7 +36,7 @@ public class EspnStepDefinition {
 
     @Then("Sign Up with {string} {string} {string} and {string}")
     public void sign_up_with_and(String firstName, String lastName, String email, String password) {
-        HomePage home = WebReference.getHome();
+        HomePage home = WebDriverReference.getHome();
         Assert.assertNotNull(home);
 
         Assert.assertTrue(home.firstNameExists());
@@ -46,13 +49,13 @@ public class EspnStepDefinition {
         home.inputFirstName(firstName);
         home.inputLastName(lastName);
         home.inputEmail(email);
-        home.inputPassword(email);
+        home.inputPassword(password);
         home.clickSubmitSignUpButton();
     }
 
     @When("click Watch button")
     public void click_watch_button() {
-        HomePage home = WebReference.getHome();
+        HomePage home = WebDriverReference.getHome();
         Assert.assertNotNull(home);
 
         home.refreshPage();
@@ -61,34 +64,43 @@ public class EspnStepDefinition {
 
     @Then("Check carousel have title and description")
     public void check_carousel_have_title_and_description() {
-        HomePage home = WebReference.getHome();
+        Driver driver = WebDriverReference.getDriver();
+        WatchPage watch = new WatchPage(driver.getDriver());
 
-        home.clickSecondCarouselItem();
-        home.clickCloseButton();
+        Assert.assertTrue(watch.containsTennisCarousel());
+        watch.clickSecondCarouselItem();
+
+        // Waiting to load providers
+        watch.waitFor();
+
+        Assert.assertTrue(watch.isCloseButtonDisplayed());
+        watch.clickCloseButton();
     }
 
     @Then("go back to main screen")
     public void go_back_to_main_screen() {
-        HomePage home = WebReference.getHome();
-
-        Assert.assertTrue(home.containsTennisCarousel());
+        HomePage home = WebDriverReference.getHome();
         home.goHomepage();
     }
 
-    @When("hover over user icon")
-    public void hover_over_user_icon() {
-        HomePage home = WebReference.getHome();
+    @When("users logs in with {string} and {string}")
+    public void users_logs_in_with_and(String email, String password) {
+        HomePage home = WebDriverReference.getHome();
+        Assert.assertNotNull(home);
+
+        // Logging in
+        home.loginMethods(email, password);
+        home.refreshPage();
+    }
+
+    @Then("hover over user icon and confirm {string}")
+    public void hover_over_user_icon_and_confirm(String firstName) {
+        HomePage home = WebDriverReference.getHome();
         Assert.assertNotNull(home);
 
         home.hoverOverUsrIcon();
-    }
-
-    @Then("confirm {string}")
-    public void confirm(String firstName) {
-        HomePage home = WebReference.getHome();
-        Assert.assertNotNull(home);
-
         Assert.assertTrue(home.containsAccountName());
-        Assert.assertTrue(home.checkAccountName("Chris"));
+        Assert.assertTrue(home.checkAccountName(firstName));
     }
+
 }

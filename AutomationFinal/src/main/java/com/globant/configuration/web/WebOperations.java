@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.time.Duration;
 
 import static org.openqa.selenium.support.PageFactory.initElements;
@@ -49,5 +48,9 @@ public class WebOperations {
 
     public void refreshPage(){
         this.driver.navigate().refresh();
+    }
+
+    public void waitFor(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
     }
 }

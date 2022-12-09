@@ -20,10 +20,10 @@ public class Hook {
      */
     @Before
     public void setUp(){
-        WebReference WebReference = new WebReference();
+        WebDriverReference WebDriverReference = new WebDriverReference();
 
         driver = new Driver();
-        WebReference.setDriver(driver);
+        WebDriverReference.setDriver(driver);
 
         Reporter.info("Deleting cookies");
         driver.getDriver().manage().deleteAllCookies();
@@ -33,7 +33,7 @@ public class Hook {
         driver.getDriver().manage().window().maximize();
 
         home = new HomePage(driver.getDriver());
-        WebReference.setHome(home);
+        WebDriverReference.setHome(home);
     }
 
     /***
