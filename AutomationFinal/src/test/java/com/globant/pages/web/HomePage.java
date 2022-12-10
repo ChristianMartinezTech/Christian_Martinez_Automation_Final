@@ -1,10 +1,7 @@
 package com.globant.pages.web;
 
 import com.globant.reporting.Reporter;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.Objects;
@@ -85,12 +82,30 @@ public class HomePage extends BasePage {
     private WebElement accountDeactivated;
 
 
+    // New WebElements
+    @FindBy (id = "BtnCreateAccount")
+    private WebElement signUpButton;
+
+    @FindBy (id = "InputFirstName")
+    private WebElement firstNameField;
+
+    @FindBy (id = "InputLastName")
+    private WebElement lastNameField;
+
+    @FindBy (id = "InputEmail")
+    private WebElement emailField;
+
+    @FindBy (id = "password-new")
+    private WebElement passwordField;
+
+    @FindBy (id = "BtnSubmit")
+    private WebElement submitSignUpButton;
+
+    @FindBy (id = "close")
+    private WebElement signUpCloseButton;
+
+
     // Methods
-
-    public HomePage getHomePage(){
-        return HomePage.this;
-    }
-
     /***
      * Method that hover over the user icon to enable Login, Logout, Account Settings, etc.
      */
@@ -161,14 +176,6 @@ public class HomePage extends BasePage {
     }
 
     /***
-     * Click on the ESPN profile button
-     */
-    public void clickEspnProfile(){
-        super.waitForVisibility(espnProfile);
-        super.clickElement(espnProfile);
-    }
-
-    /***
      * Clicks on the Watch button
      */
     public void clickWatchButton(){
@@ -200,29 +207,6 @@ public class HomePage extends BasePage {
         getDriver().get(url);
     }
 
-    /***
-     * Clicks on Delete Account
-     */
-    public void clickDeleteAccount(){
-        super.waitForVisibility(deleteAccountButton);
-        ((JavascriptExecutor) super.getDriver()).executeScript("arguments[0].click();", deleteAccountButton);
-    }
-
-    /***
-     * Clicks on Submit Delete Account
-     */
-    public void clickDeleteAccountSubmit(){
-        super.waitForVisibility(deleteAccountSubmit);
-        super.clickElement(deleteAccountSubmit);
-    }
-
-    /***
-     * Moves to the Delete button
-     */
-    public void moveToDelete(){
-        super.waitForVisibility(deleteAccountButton);
-        super.hoverOver(deleteAccountButton);
-    }
 
     /***
      * Interface of login methods
@@ -265,9 +249,13 @@ public class HomePage extends BasePage {
      */
     public boolean checkAccountName(String name) {
         String nameFixed = accountName.getText();
+        Reporter.info("1");
+        Reporter.info(nameFixed);
         StringBuffer sb = new StringBuffer(nameFixed);
         sb.deleteCharAt(sb.length()-1);
 
+        Reporter.info("2");
+        Reporter.info(String.valueOf(sb));
         return nameEqual(String.valueOf(sb), name);
     }
 
@@ -318,4 +306,138 @@ public class HomePage extends BasePage {
         super.waitForVisibility(tennisCarousel);
         return tennisCarousel.isDisplayed();
     }
+
+
+    // New Methods
+    /***
+     * Clicks the Sign-Up button
+     */
+    public void clickSignUp() {
+        super.waitForVisibility(signUpButton);
+        super.clickElement(signUpButton);
+    }
+
+    /***
+     * Inputs the first name
+     * @param firstName first name
+     */
+    public void inputFirstName(String firstName) {
+        super.waitForVisibility(firstNameField);
+        super.typeOnInput(firstNameField, firstName);
+    }
+
+    /***
+     * Checks if first name exists
+     * @return true if element exists
+     */
+    public boolean firstNameExists() {
+        try {
+            return firstNameField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /***
+     * Inputs Last Name
+     * @param lastName last name
+     */
+    public void inputLastName(String lastName) {
+        super.waitForVisibility(lastNameField);
+        super.typeOnInput(lastNameField, lastName);
+    }
+
+    /***
+     * Checks if last name exists
+     * @return true if element exists
+     */
+    public boolean lastNameExists() {
+        try {
+            return lastNameField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /***
+     * Inputs the email
+     * @param email email
+     */
+    public void inputSignUpEmail(String email) {
+        super.waitForVisibility(emailField);
+        super.typeOnInput(emailField, email);
+    }
+
+    /***
+     * Check that the email field exists
+     * @return true if exists
+     */
+    public boolean emailExists() {
+        try {
+            return emailField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /***
+     * Intpus the password
+     * @param password to type
+     */
+    public void inputSignUpPassword(String password) {
+        super.waitForVisibility(passwordField);
+        super.typeOnInput(passwordField, password);
+    }
+
+    /***
+     * Checks the password field exists
+     * @return true if exists
+     */
+    public boolean passwordExists() {
+        try {
+            return passwordField.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /***
+     * Clicks the submit button
+     */
+    public void clickSubmitSignUpButton() {
+        super.waitForVisibility(submitSignUpButton);
+        super.clickElement(submitSignUpButton);
+    }
+
+    /***
+     * Checks the Sign-Up button exists
+     * @return true if button exists
+     */
+    public boolean submitSubmitExists() {
+        try {
+            return submitSignUpButton.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /***
+     * Checks if the cloe button exists
+     * @return true if exists
+     */
+    public boolean checkSignUpCloseButton(){
+        try {
+            return signUpCloseButton.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /***
+     * Goes to HomePage
+     */
+    public void goHomepage(){
+        getDriver().get("https://www.espnqa.com/?src=com&_adblock=true&espn=cloud");
+    }
+
 }

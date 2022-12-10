@@ -7,8 +7,7 @@ Background:
   # Successful Sign Up
   Scenario: Sign Up successful
     When click Sign Up button
-    Then Sign Up with "Chris" "Martinez" "Aloha..1@gmail.com" and "Aloha..1"
-    And user is logged in
+    Then Sign Up with "Chris" "Martinez" "Aloha.123@gmail.com" and "Aloha.123"
 
   # Check Carousel
   Scenario: Carousel present
@@ -18,5 +17,7 @@ Background:
 
   # Check User
   Scenario: User is logged in
-    When hover over user icon
-    Then confirm "Chris"
+    When users logs in with "Aloha.123@gmail.com" and "Aloha.123"
+    And hover over user icon and confirm "Chris"
+    Then Log out
+    And hover over user icon and confirm "Chris" is not there
