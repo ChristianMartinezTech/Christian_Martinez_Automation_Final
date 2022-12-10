@@ -19,7 +19,7 @@ public class WatchPage extends BasePage {
     @FindBy(className = "lightboxTitle")
     private WebElement providerBanner;
 
-    @FindBy (css = ".lightbox__closebtn")
+    @FindBy(className = "lightbox__closebtn")
     private WebElement closeButton;
 
 
@@ -52,7 +52,7 @@ public class WatchPage extends BasePage {
      * @return true if its displayed
      */
     public boolean isCloseButtonDisplayed(){
-        super.waitForVisibility(closeButton);
+        super.waitForClickable(closeButton);
         return closeButton.isDisplayed();
     }
 

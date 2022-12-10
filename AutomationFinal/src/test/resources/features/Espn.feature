@@ -18,4 +18,6 @@ Background:
   # Check User
   Scenario: User is logged in
     When users logs in with "Aloha.123@gmail.com" and "Aloha.123"
-    Then hover over user icon and confirm "Chris"
+    And hover over user icon and confirm "Chris"
+    Then Log out
+    And hover over user icon and confirm "Chris" is not there
